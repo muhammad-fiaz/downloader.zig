@@ -28,7 +28,9 @@
 </div>
 
 ---
-
+> [!NOTE]
+> `downloader.zig` has been replaced by [`httpx.zig`](https://github.com/muhammad-fiaz/httpx.zig). Please use `httpx.zig` for file downloads and HTTP networking in Zig.
+> 
 A production-grade, high-performance HTTP/HTTPS download library for Zig, designed with a clean, intuitive, and developer-friendly API.
 
 **⭐️ If you love `downloader.zig`, make sure to give it a star! ⭐️**
