@@ -42,3 +42,6 @@ desktop.ini
 *.mp4
 *.txt
 *.log
+
+# Documentation static files that must remain tracked
+!docs/public/robots.txt
