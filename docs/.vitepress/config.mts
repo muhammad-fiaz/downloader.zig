@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import llmstxt, { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
+import llmstxt from "vitepress-plugin-llms";
 
 export const SITE_URL = 'https://muhammad-fiaz.github.io/downloader.zig'
 export const SITE_NAME = 'downloader.zig'
@@ -34,11 +34,6 @@ export default defineConfig({
     plugins: [llmstxt()],
   },
 
-  markdown: {
-    config(md) {
-      md.use(copyOrDownloadAsMarkdownButtons)
-    },
-  },
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/downloader.zig/logo.svg' }],
@@ -128,6 +123,27 @@ gtag('config', '${GA_ID}');`,
         ['meta', { name: 'description', content: pageData.frontmatter.description }],
       )
     }
+
+    const breadcrumbParts = cleanPath.split('/').filter((part: string) => part && part !== 'index')
+    if (breadcrumbParts.length > 0) {
+      pageData.frontmatter.head.push([
+        'script',
+        { type: 'application/ld+json' },
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: pageData.title || breadcrumbParts[breadcrumbParts.length - 1],
+              item: canonicalUrl,
+            },
+          ],
+        }),
+      ])
+    }
   },
 
   themeConfig: {
@@ -214,13 +230,6 @@ gtag('config', '${GA_ID}');`,
 
     search: {
       provider: 'local'
-    },
-
-    llms: {
-      copyText: 'Copy page',
-      copiedText: 'Copied',
-      viewMarkdownText: 'View as Markdown',
-      openInAIText: 'Open in {provider}'
     },
 
     editLink: {
